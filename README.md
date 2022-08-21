@@ -14,3 +14,5 @@ Then open a different terminal to test it via `curl`, i.e.:
 curl localhost:8080/health
 curl localhost:8080/ready
 ```
+
+פתח גם קבוצת פייסבוק
