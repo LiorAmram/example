@@ -1,0 +1,22 @@
+# Copyright (C) 2016--2022 Lightbits Labs Ltd. - All Rights Reserved
+# Unauthorized copying of this file, via any medium is strictly prohibited
+# Proprietary and confidential
+# Intel Copyright © 2021, Intel Corporation.
+
+name: example CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Check build and test is passing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build & Test
+        run: make

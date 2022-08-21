@@ -1,0 +1,79 @@
+# Intel contributions Copyright © 2021, Intel Corporation.
+openapi: 3.0.3
+info:
+  title: Example Microservice APIs
+  version: 0.1.0
+servers:
+  - url: https://cloud.example.com/example
+  - url: http://cloud.example.com/example
+paths:
+  /health:
+    get:
+      summary: Check health
+      description: ""
+      operationId: getHealth
+      responses:
+        200:
+          description: healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      - available
+                      - unavailable
+                  version:
+                    type: string
+                    description: "Version string ([<MAJOR>.<MINOR>.<PATCH>]-rev-[<COMMIT-SHA1>][-dirty]) containing the SemVer2.0 version of the service at the time of build, the commit short SHA of the monorepo when the service was built, and if it was dirty (uncommitted changes)"
+                    example: "1.0.1-rev-4afebe8"
+        '4XX':
+          $ref: '#/components/responses/ErrorResponse'
+        '5XX':
+          $ref: '#/components/responses/ErrorResponse'
+  /ready:
+    get:
+      summary: Check service readiness
+      description: ""
+      operationId: getReady
+      responses:
+        200:
+          description: ready response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadyResponseBody'
+        '4XX':
+          $ref: '#/components/responses/ErrorResponse'
+        '5XX':
+          $ref: '#/components/responses/ErrorResponse'
+
+components:
+  responses:
+    ErrorResponse:
+      description: global error response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponseBody'
+  schemas:
+    ErrorResponseBody:
+      required:
+        - title
+        - detail
+      type: object
+      properties:
+        title:
+          type: string
+          description: a brief, human-readable message about the error
+        detail:
+          type: string
+          description: a human-readable explanation of the error
+    ReadyResponseBody:
+      type: object
+      properties:
+        ready:
+          type: boolean
+          description: indicates if the service is ready

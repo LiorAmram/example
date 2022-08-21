@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  example-service:
+    image: ${EXAMPLE_IMG:-example:latest}
+    container_name: exampleService
+    restart: "unless-stopped"
+    ports:
+      - '8080:8080'
